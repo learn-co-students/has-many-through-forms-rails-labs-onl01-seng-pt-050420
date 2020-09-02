@@ -23,7 +23,7 @@
      <%= f.hidden_field :post_id, value: @post.id %>
      <%= f.collection_select :user_id, User.all, :id, :username %>
      <%= f.text_field :content %>
-     <%= f.fields_for :users, @comments.users.build do |user_fields|%>
+     <%= f.fields_for :user, @comment.user.build do |user_fields|%>
         <%= user_fields.text_field :username %>
      <% end %>
 <% end %>
