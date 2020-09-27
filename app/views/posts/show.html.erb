@@ -1,22 +1,29 @@
 <h2><%= @post.title%>  </h2>
+ 
  Categories:
 <ul>
-
 <% @post.categories.each do |category|%>
 <li><%= category.name%></li>
 <%end%>
 <br>
+
 Content:
 <%= @post.content%><br><br>
 <br>
+
 Comments:<br>
 <ul>
 <% @post.comments.each do |comment|%>
+
+
 <li><%= comment.user.username %> said:
+
 <%= comment.content%></li>
+
 <%end%>
 </ul>
 <br>
+
 Users who commented on this post:
 <ul>
 <% @post.users.uniq.each do |user|%>
@@ -24,6 +31,7 @@ Users who commented on this post:
 <%end%>
 </ul>
 <br>
+
 Create a new comment:
 
 <%= form_for @post.comments.build do |f|%>
@@ -35,7 +43,7 @@ Create a new comment:
 <br>
 Create an User:
 <br>
-<%= f.fields_for :users, @post.comments.last.build_user do |user_field|%>
+<%= f.fields_for :user, User.new do |user_field|%>
 <%= user_field.label :username %>
 <%= user_field.text_field :username %><br>
 
