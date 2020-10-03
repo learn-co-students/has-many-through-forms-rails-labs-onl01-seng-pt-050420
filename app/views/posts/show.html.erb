@@ -1,1 +1,46 @@
+<section class="title">
+<h1><%= @post.title %></h1>
+</section>
 
+<section class="post_content">
+<p><%= @post.content%></p>
+</section>
+
+<section class="category_list">
+<h3>Categories</h3>
+<% @post.categories.each do |cat|%>
+<h4><%= cat.name %></h4>
+<% end %>
+</section>
+
+<section class="comments">
+<h4>Comments:</h4>
+<% @post.comments.each do |comment|%>
+<%= comment.user.username %> says: <%= comment.content%> <br/>
+<% end %>
+</section>
+<br><br>
+<section class="commentors">
+<h4>Commentors:</h4>
+<ul>
+<% @post.users.distinct.each do |user| %>
+  <li>
+    <%= link_to user.username, user_path(user) %>
+  </li>
+<% end %>
+</ul>
+</section>
+<br/>
+<section class="comment_form">
+<%= form_for @post.comments.build do |c|%>
+<%= c.hidden_field :post_id, value: @post.id %>
+<%= c.label :content, "Comment"%> 
+<br/>
+<%= c.collection_select :user_id, User.all, :id, :username, {include_blank: "Select User"} %> <br/>
+<%= c.fields_for :user, User.new do |user_field|%>
+<%= user_field.text_field :username, placeholder: "Add new user" %>
+<% end %>
+<%= c.text_field :content, placeholder: "Enter comment"%>
+<%= c.submit%>
+<%end%>
+</section>
